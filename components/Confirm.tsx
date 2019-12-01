@@ -62,7 +62,7 @@ export function Confirm({
   const finish = useCallback(() => {
     Promise.resolve()
       .then(async () => {
-        setIsLoading({ message: "Criando..." })
+        setIsLoading({ message: "Creating..." })
         const userId = await requester.getUserId()
         const created = await postUserPlaylists({
           user_id: userId,
@@ -70,14 +70,17 @@ export function Confirm({
             name: playlistName
           }
         })
-        debugger
-        await putUserPlaylistTracks({
-          user_id: userId,
-          playlist_id: created.id!,
-          body: {
-            uris: toCreate?.tracks.map(track => track.track?.uri!) || []
-          }
-        })
+        const tracksChunked = chunkify(toCreate?.tracks || [])
+        for (let x = 0; x < tracksChunked.length; x++) {
+          const chunk = tracksChunked[x]
+          await putUserPlaylistTracks({
+            user_id: userId,
+            playlist_id: created.id!,
+            body: {
+              uris: chunk.map(track => track.track?.uri!) || []
+            }
+          })
+        }
         setIsLoading({ message: "Success!" })
         setTimeout(() => {
           onConfirm(created)
@@ -147,4 +150,13 @@ export function Confirm({
       )}
     </div>
   )
+}
+
+//ty wes bos
+function chunkify<T>(array: T[], chunkSize = 100) {
+  const chunks = Array.from({ length: Math.ceil(array.length / chunkSize) }, (_, idx) => {
+    const start = chunkSize * idx
+    return array.slice(start, start + chunkSize)
+  })
+  return chunks
 }
