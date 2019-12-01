@@ -20,7 +20,6 @@ class RestRequester extends SwaggerRequester {
   getSavedToken(): { access_token? } {
     //fixme: a forma mais correta é usar cookies
     const stored = localStorage.getItem("auth_token") || "{}"
-    console.log("stored", stored)
     try {
       return JSON.parse(stored)
     } catch (err) {
@@ -57,7 +56,7 @@ class RestRequester extends SwaggerRequester {
         throw Error("Not authenticated.")
       }
     }
-    const url = new URL(SPOFY_SERVICE_URL + request.url)
+    const url = new URL(input._directUrl || SPOFY_SERVICE_URL + request.url)
     const params = Object.assign({}, request.query || {}, input._extraQueryParams || {})
     Object.keys(params).forEach(
       key => params[key] !== undefined && url.searchParams.append(key, params[key])
@@ -104,6 +103,7 @@ declare global {
     interface MergeToRequest {
       _extraQueryParams?: Record<string, any>
       _noAuth?: boolean
+      _directUrl?: string
     }
   }
 }

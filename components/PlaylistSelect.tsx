@@ -1,21 +1,22 @@
-import { playlist, playlist_simple } from "./_oai/api-types"
 import { useState, useRef, useEffect, useCallback } from "react"
 import { Paginator } from "./_common/Paginator"
 import { getMePlaylists } from "./_common/otherRoutes"
 import { formatError } from "./_common/formatError"
+import { playlist_simple } from "./_oai/api-types"
 
 class MyPlaylistsPage extends Paginator<playlist_simple> {
   async _getPage() {
     const resp = await getMePlaylists({})
     return {
       data: resp.items || [],
-      next: resp.next
+      next: resp.next,
+      total: resp.total!
     }
   }
 }
 
 export interface PlaylistSelectProps {
-  onSelect: (id: string) => any
+  onSelect: (playlist: playlist_simple) => any
 }
 
 export function PlaylistSelect(i: PlaylistSelectProps) {
@@ -44,25 +45,28 @@ export function PlaylistSelect(i: PlaylistSelectProps) {
   }, [])
 
   const select = useCallback(
-    (id: string) => ev => {
-      i.onSelect(id)
+    (playlist: playlist_simple) => ev => {
+      i.onSelect(playlist)
     },
     [i]
   )
 
   return (
     <section>
-      <h2>Playlist select</h2>
+      <h1>Playlist select</h1>
       {error && <p>{error}</p>}
       <div>
-        <h3>My playlists</h3>
+        <h2>My playlists</h2>
 
         <table>
           <tbody>
             <tr>
               <td>My liked songs</td>
               <td>
-                <button type="button" onClick={select("liked_songs")}>
+                <button
+                  type="button"
+                  onClick={select({ id: "liked_songs", name: "My liked songs" })}
+                >
                   Select
                 </button>
               </td>
@@ -72,7 +76,7 @@ export function PlaylistSelect(i: PlaylistSelectProps) {
                 <tr key={playlist.id}>
                   <td>{playlist.name}</td>
                   <td>
-                    <button type="button" onClick={select(playlist.id!)}>
+                    <button type="button" onClick={select(playlist)}>
                       Select
                     </button>
                   </td>

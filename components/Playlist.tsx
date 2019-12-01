@@ -1,14 +1,14 @@
-import { Component, useRef } from "react"
+import { Component, useRef, useEffect, useState } from "react"
 import { formatError } from "./_common/formatError"
 import { getPlaylist } from "./_common/otherRoutes"
 import { Paginator } from "./_common/Paginator"
-import { playlist_track, saved_track } from "./_oai/api-types"
 import { getMeTracks } from "./_oai/modules/Me"
+import { saved_track, playlist_track } from "./_oai/api-types"
 
-export function Playlist({ id }: { id: string }) {
+export function Playlist({ id, name }: { id: string; name: string }) {
   if (!id) return null
-  if (id === "liked_songs") return <MyTracksPlaylist />
-  return <PlaylistById id={id} />
+  if (id === "liked_songs") return <MyTracksPlaylist title={name} />
+  return <PlaylistById id={id} name={name} />
 }
 
 export class MyTracksGetter extends Paginator<saved_track> {
@@ -16,7 +16,8 @@ export class MyTracksGetter extends Paginator<saved_track> {
     const trackResp = await getMeTracks({})
     return {
       data: trackResp.items || [],
-      next: trackResp.next
+      next: trackResp.next,
+      total: trackResp.total!
     }
   }
 }
@@ -30,23 +31,48 @@ export class PlaylistTracksGetter extends Paginator<playlist_track> {
     const playlist = await getPlaylist({ playlist_id: this.playlistId })
     return {
       data: playlist.tracks?.items || [],
-      next: playlist.tracks?.next
+      next: playlist.tracks?.next,
+      total: playlist.tracks?.total!
     }
   }
 }
 
-export function MyTracksPlaylist() {
-  const $paginator = useRef(new MyTracksGetter())
-  return <PlaylistInner tracksReader={$paginator.current} />
+class StaticGetter extends Paginator<saved_track> {
+  constructor(public tracks: saved_track[]) {
+    super()
+  }
+
+  async _getPage() {
+    return { data: this.tracks, total: this.tracks.length }
+  }
 }
 
-export function PlaylistById(i: { id: string }) {
+export function MyTracksPlaylist({ title }) {
+  const $paginator = useRef(new MyTracksGetter())
+  return <PlaylistInner tracksReader={$paginator.current} title={title} />
+}
+
+export function PlaylistById(i: { id: string; name: string }) {
   const $paginator = useRef(new PlaylistTracksGetter(i.id))
-  return <PlaylistInner tracksReader={$paginator.current} />
+  return <PlaylistInner tracksReader={$paginator.current} title={i.name} />
+}
+
+export function StaticPlaylist({ tracks, title }: { tracks: saved_track[]; title }) {
+  // gambi feia
+  const [$paginator, setPaginator] = useState(new StaticGetter(tracks) as any)
+  useEffect(() => {
+    setPaginator(null)
+    setTimeout(() => {
+      setPaginator(new StaticGetter(tracks))
+    }, 100)
+  }, [tracks])
+  if (!$paginator) return null
+  return <PlaylistInner tracksReader={$paginator} title={title} />
 }
 
 interface PlaylistInnerProps {
   tracksReader: Paginator<saved_track>
+  title: string
 }
 
 export class PlaylistInner extends Component<PlaylistInnerProps, PlaylistInner["state"]> {
@@ -78,12 +104,14 @@ export class PlaylistInner extends Component<PlaylistInnerProps, PlaylistInner["
   }
 
   render() {
-    const { tracks, loading } = this.state
-    const { tracksReader } = this.props
+    const { tracks, loading, error } = this.state
+    const { tracksReader, title } = this.props
     if (!tracks) return null
     return (
       <>
-        <h1>My tracks</h1>
+        <h1>{title}</h1>
+        {error && <p>{error}</p>}
+        <p>{tracksReader.getTotal()} tracks.</p>
         <table>
           <thead>
             <tr>
@@ -92,8 +120,8 @@ export class PlaylistInner extends Component<PlaylistInnerProps, PlaylistInner["
             </tr>
           </thead>
           <tbody>
-            {tracks.map(line => (
-              <tr key={line.track?.id}>
+            {tracks.map((line, idx) => (
+              <tr key={line.track?.id + "-" + idx}>
                 <td>{line.track?.name}</td>
                 <td>{line.track?.artists?.map(x => x.name).join(", ")}</td>
               </tr>

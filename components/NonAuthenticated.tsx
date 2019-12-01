@@ -25,20 +25,21 @@ export function NonAuthenticated() {
         allScopes["user-read-recently-played"],
         allScopes["user-library-read"],
         allScopes["playlist-read-private"],
-        allScopes["playlist-modify-private"]
+        allScopes["playlist-modify-private"],
+        allScopes["playlist-modify-public"]
       ].join(" ")
     }
     const url = new URL(SPOFY_ACCOUNTS_URL + "/authorize")
     Object.entries(data).forEach(([k, v]) => {
       url.searchParams.append(k, v || "")
     })
-    window.open(url.toString())
+    window.location.href = url.toString()
   }
 
   return (
     <>
       <h1>User is not authenticated</h1>
-      <button onClick={authenticate}>Authenticate</button>
+      <button onClick={authenticate}>Concede us your soul</button>
     </>
   )
 }

@@ -1,9 +1,11 @@
 # Spotify playlist subset
 
+[spotify-subset.now.sh](https://spotify-subset.now.sh)
+
 Objetivo: pegar minha lista de músicas curtidas ou qualquer playlist especificada
 e gerar uma nova playlist com um subconjunto aleatório dessas músicas.
 
-Motivo: Quero ter algumas músicas offline no celular mas não a colação toda.
+Motivo: Quero ter algumas músicas offline no celular mas não a coleção toda.
 
 ## Análise inicial
 
@@ -14,3 +16,8 @@ Motivo: Quero ter algumas músicas offline no celular mas não a colação toda.
 - Ganhou: Site estático, por ser mais fácil de acessar e mais fácil de integrar com a janela do oauth;
 
 Site estático? Portanto será um projeto next.js.
+
+## Feito com
+
+- As coxa, o mais rápido possível. Totalmente bagunçado.
+- Revolucionário framework css: ZERO-CSS©

@@ -1,12 +1,23 @@
 import { useCallback, useState } from "react"
-import { requester } from "./_common/requester"
-import { saved_track } from "./_oai/api-types"
+import { Playlist, StaticPlaylist } from "./Playlist"
 import { PlaylistSelect } from "./PlaylistSelect"
-import { Playlist } from "./Playlist"
+import { requester } from "./_common/requester"
+import { playlist_simple, saved_track } from "./_oai/api-types"
+import { Confirm } from "./Confirm"
 
 export function App() {
-  const [error, setError] = useState("")
-  const [playlistId, setPlaylistId] = useState("")
+  const [message, setMessage] = useState("")
+  const [playlist, setPlaylist] = useState(null as playlist_simple | null)
+  const [confirming, setConfirming] = useState(false)
+
+  const onConfirm = useCallback((playlist: playlist_simple) => {
+    setPlaylist(null)
+    setConfirming(false)
+    setMessage("Playlist sucessfully created.")
+    setTimeout(() => {
+      setMessage("")
+    }, 10000)
+  }, [])
 
   const logout = useCallback(() => {
     requester.clearToken()
@@ -18,19 +29,29 @@ export function App() {
       <nav>
         <button onClick={logout}>Log out</button>
       </nav>
-      {error && (
+      {message && (
         <section>
-          <h1>Error</h1>
-          <p>{error}</p>
+          <p style={{ fontWeight: "bold" }}>{message}</p>
         </section>
       )}
-      {!playlistId && <PlaylistSelect onSelect={id => setPlaylistId(id)} />}
-      {playlistId && (
+      {confirming && playlist && (
+        <>
+          <Confirm
+            playlist={playlist}
+            onCancel={() => setConfirming(false)}
+            onConfirm={onConfirm}
+          />
+          <hr />
+        </>
+      )}
+      {!playlist && <PlaylistSelect onSelect={id => setPlaylist(id)} />}
+      {playlist && (
         <>
           <section>
-            <button onClick={() => setPlaylistId("")}>Select another playlist</button>
+            <button onClick={() => setPlaylist(null)}>Select another playlist</button>
+            <button onClick={() => setConfirming(true)}>Generate subset</button>
           </section>
-          <Playlist id={playlistId} />
+          <Playlist id={playlist.id!} name={playlist.name!} />
         </>
       )}
     </div>
