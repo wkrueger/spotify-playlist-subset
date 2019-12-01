@@ -1,16 +1,12 @@
 {
   "swagger": "2.0",
-  "schemes": [
-    "https"
-  ],
+  "schemes": ["https"],
   "host": "api.spotify.com",
   "basePath": "/v1",
   "info": {
     "title": "Spotify",
     "version": "v1",
-    "x-apisguru-categories": [
-      "media"
-    ],
+    "x-apisguru-categories": ["media"],
     "x-logo": {
       "url": "https://api.apis.guru/v2/cache/logo/https_logo-core.clearbit.com_spotify.com"
     },
@@ -27,12 +23,8 @@
   "externalDocs": {
     "url": "https://developer.spotify.com/"
   },
-  "consumes": [
-    "application/json"
-  ],
-  "produces": [
-    "application/json"
-  ],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
   "securityDefinitions": {
     "oauth_2_0_accessCode": {
       "authorizationUrl": "https://accounts.spotify.com/authorize",
@@ -654,10 +646,7 @@
         "parameters": [
           {
             "description": "The type to unfollow.",
-            "enum": [
-              "artist",
-              "user"
-            ],
+            "enum": ["artist", "user"],
             "in": "query",
             "name": "type",
             "required": true,
@@ -682,9 +671,7 @@
         "parameters": [
           {
             "description": "The ID type, currently only artist is supported.",
-            "enum": [
-              "artist"
-            ],
+            "enum": ["artist"],
             "in": "query",
             "name": "type",
             "required": true,
@@ -722,10 +709,7 @@
         "parameters": [
           {
             "description": "The type to follow.",
-            "enum": [
-              "artist",
-              "user"
-            ],
+            "enum": ["artist", "user"],
             "in": "query",
             "name": "type",
             "required": true,
@@ -752,10 +736,7 @@
         "parameters": [
           {
             "description": "The type to follow.",
-            "enum": [
-              "artist",
-              "user"
-            ],
+            "enum": ["artist", "user"],
             "in": "query",
             "name": "type",
             "required": true,
@@ -801,9 +782,7 @@
             "type": "string"
           }
         ],
-        "produces": [
-          "text/plain"
-        ],
+        "produces": ["text/plain"],
         "responses": {
           "200": {
             "description": "OK"
@@ -877,9 +856,7 @@
             "type": "string"
           }
         ],
-        "produces": [
-          "text/plain"
-        ],
+        "produces": ["text/plain"],
         "responses": {
           "200": {
             "description": "OK"
@@ -1133,9 +1110,7 @@
                   "type": "boolean"
                 }
               },
-              "required": [
-                "name"
-              ],
+              "required": ["name"],
               "type": "object"
             }
           }
@@ -1243,9 +1218,7 @@
             }
           }
         ],
-        "produces": [
-          "text/plain"
-        ],
+        "produces": ["text/plain"],
         "responses": {
           "200": {
             "description": "OK"
@@ -1275,9 +1248,7 @@
             "type": "string"
           }
         ],
-        "produces": [
-          "text/plain"
-        ],
+        "produces": ["text/plain"],
         "responses": {
           "200": {
             "description": "OK"
@@ -1315,9 +1286,7 @@
             }
           }
         ],
-        "produces": [
-          "text/plain"
-        ],
+        "produces": ["text/plain"],
         "responses": {
           "200": {
             "description": "OK"
@@ -1400,9 +1369,7 @@
                   "type": "array"
                 }
               },
-              "required": [
-                "tracks"
-              ],
+              "required": ["tracks"],
               "type": "object"
             }
           }
@@ -1570,9 +1537,7 @@
                   "type": "array"
                 }
               },
-              "required": [
-                "uris"
-              ],
+              "required": ["uris"],
               "type": "object"
             }
           }

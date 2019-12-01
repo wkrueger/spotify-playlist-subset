@@ -124,7 +124,10 @@ export const deleteMeTracks = ApiCommon.requestMaker<deleteMeTracks_Type, delete
   id: "deleteMeTracks",
   path: "/me/tracks",
   verb: "DELETE",
-  parameters: [{ name: "Accept", in: "header" }, { name: "ids", required: true, in: "query" }]
+  parameters: [
+    { name: "Accept", in: "header" },
+    { name: "ids", required: true, in: "query" }
+  ]
 })
 
 export type getMeTracks_Type = {
@@ -167,7 +170,10 @@ export const putMeTracks = ApiCommon.requestMaker<putMeTracks_Type, putMeTracks_
   id: "putMeTracks",
   path: "/me/tracks",
   verb: "PUT",
-  parameters: [{ name: "Accept", in: "header" }, { name: "ids", required: true, in: "query" }]
+  parameters: [
+    { name: "Accept", in: "header" },
+    { name: "ids", required: true, in: "query" }
+  ]
 })
 
 export type getMeTracksContains_Type = {
