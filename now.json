@@ -1,8 +1,8 @@
 {
-  "name": "spotify-subset",
+  "name": "spotify-playlist-subset",
   "build": {
     "env": {
-      "WEBSITE_URL": "https://spotify-subset.now.sh"
+      "WEBSITE_URL": "https://spotify-playlist-subset.now.sh"
     }
   }
 }
