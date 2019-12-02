@@ -43,7 +43,7 @@ class RestRequester extends SwaggerRequester {
 
   clearToken() {
     localStorage.clear()
-    Router.push("/")
+    Router.push("/#auth-error")
   }
 
   // @Override
