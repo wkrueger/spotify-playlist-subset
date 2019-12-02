@@ -23,7 +23,7 @@ export default function PowerToken() {
       <form style={{ margin: "15px" }} onSubmit={bag.handleSubmit}>
         <input type="text" {...h.bindInput("token")} />
         <br />
-        <button type="submit">I am enterily yours</button>
+        <button type="submit">I am enterely yours</button>
       </form>
     </div>
   )
