@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from "react"
 import { Paginator } from "./_common/Paginator"
-import { getMePlaylists } from "./_common/otherRoutes"
+import { getMePlaylists } from "./_common/undocumentedRoutes"
 import { formatError } from "./_common/formatError"
 import { playlist_simple } from "./_oai/api-types"
 

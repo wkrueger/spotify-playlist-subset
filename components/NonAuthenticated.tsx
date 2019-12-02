@@ -1,5 +1,6 @@
 import { v4 } from "uuid"
 import { CLIENT_ID, SPOFY_ACCOUNTS_URL, SPOFY_REDIRECT_URL } from "../components/_common/requester"
+import Link from "next/link"
 
 const allScopes = {
   "user-top-read": "user-top-read",
@@ -40,6 +41,10 @@ export function NonAuthenticated() {
     <>
       <h1>User is not authenticated</h1>
       <button onClick={authenticate}>Concede us your soul</button>
+      <br />
+      <Link href="/better-token">
+        <button>Concede us something more</button>
+      </Link>
     </>
   )
 }

@@ -3,6 +3,7 @@ import { App } from "../components/App"
 import { NonAuthenticated } from "../components/NonAuthenticated"
 import { requester } from "../components/_common/requester"
 import Head from "next/head"
+import { Title } from "../components/_common/Title"
 
 export default function Main() {
   const [authOk, setAuthOk] = useState(null as null | boolean)
@@ -15,12 +16,12 @@ export default function Main() {
   if (authOk === null) return null
 
   return (
-    <div>
+    <Title>
       <Head>
         <title>Spotify playlist subset</title>
       </Head>
       {!authOk && <NonAuthenticated />}
       {authOk && <App />}
-    </div>
+    </Title>
   )
 }

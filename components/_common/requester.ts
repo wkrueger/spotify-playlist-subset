@@ -13,11 +13,16 @@ console.log("backend url", WEBSITE_URL)
 
 // ver: github wkrueger/swagger-ts-template
 class RestRequester extends SwaggerRequester {
-  async authenticate(parsed: any) {
+  authenticate(parsed: any) {
     localStorage.setItem("auth_token", JSON.stringify(parsed))
   }
 
-  getSavedToken(): { access_token? } {
+  authenticateBetter(token: string) {
+    const obj = { access_token: String(token).trim(), better: true }
+    localStorage.setItem("auth_token", JSON.stringify(obj))
+  }
+
+  getSavedToken(): { access_token?; better? } {
     //fixme: a forma mais correta é usar cookies
     const stored = localStorage.getItem("auth_token") || "{}"
     try {
@@ -50,10 +55,15 @@ class RestRequester extends SwaggerRequester {
     console.log("handler", request, input)
     var token
     if (!input._noAuth) {
-      token = this.getSavedToken().access_token
+      const obj = this.getSavedToken()
+      token = obj.access_token
       if (!token) {
         this.clearToken()
         throw Error("Not authenticated.")
+      }
+      if (input._betterToken && !obj.better) {
+        Router.push("/better-token")
+        throw Error("We require a better token.")
       }
     }
     const url = new URL(input._directUrl || SPOFY_SERVICE_URL + request.url)
@@ -104,6 +114,7 @@ declare global {
       _extraQueryParams?: Record<string, any>
       _noAuth?: boolean
       _directUrl?: string
+      _betterToken?: boolean
     }
   }
 }

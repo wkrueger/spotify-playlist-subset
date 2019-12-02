@@ -4,6 +4,7 @@ import { PlaylistSelect } from "./PlaylistSelect"
 import { requester } from "./_common/requester"
 import { playlist_simple, saved_track } from "./_oai/api-types"
 import { Confirm } from "./Confirm"
+import Link from "next/link"
 
 export function App() {
   const [message, setMessage] = useState("")
@@ -19,16 +20,8 @@ export function App() {
     }, 10000)
   }, [])
 
-  const logout = useCallback(() => {
-    requester.clearToken()
-    window.location.reload()
-  }, [])
-
   return (
-    <div>
-      <nav>
-        <button onClick={logout}>Log out</button>
-      </nav>
+    <>
       {message && (
         <section>
           <p style={{ fontWeight: "bold" }}>{message}</p>
@@ -54,6 +47,6 @@ export function App() {
           <Playlist id={playlist.id!} name={playlist.name!} />
         </>
       )}
-    </div>
+    </>
   )
 }

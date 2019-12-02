@@ -1,6 +1,6 @@
 import { Component, useRef, useEffect, useState } from "react"
 import { formatError } from "./_common/formatError"
-import { getPlaylist } from "./_common/otherRoutes"
+import { getPlaylist } from "./_common/undocumentedRoutes"
 import { Paginator } from "./_common/Paginator"
 import { getMeTracks } from "./_oai/modules/Me"
 import { saved_track, playlist_track } from "./_oai/api-types"
