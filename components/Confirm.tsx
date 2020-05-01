@@ -73,7 +73,7 @@ export function Confirm({
         const tracksChunked = chunkify(toCreate?.tracks || [])
         for (let x = 0; x < tracksChunked.length; x++) {
           const chunk = tracksChunked[x]
-          await putUserPlaylistTracks({
+          await postUserPlaylistTracks({
             user_id: userId,
             playlist_id: created.id!,
             body: {
