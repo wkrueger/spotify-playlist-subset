@@ -277,9 +277,8 @@ export const getUserPlaylistTracks = ApiCommon.requestMaker<
 
 export type postUserPlaylistTracks_Type = {
   Accept?: string
+  body: { uris: any[] }
   playlist_id: string
-  position?: number
-  uris: string
   user_id: string
 }
 export type postUserPlaylistTracks_Response = Types.playlist_snapshot
@@ -298,9 +297,8 @@ export const postUserPlaylistTracks = ApiCommon.requestMaker<
   verb: "POST",
   parameters: [
     { name: "Accept", in: "header" },
+    { name: "body", required: true, in: "body" },
     { name: "playlist_id", required: true, in: "path" },
-    { name: "position", required: false, in: "query" },
-    { name: "uris", required: true, in: "query" },
     { name: "user_id", required: true, in: "path" }
   ]
 })
