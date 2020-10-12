@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from "react"
 import { Paginator } from "./_common/Paginator"
-import { getMePlaylists } from "./_common/undocumentedRoutes"
+import { getMePlaylists, getPlaylist } from "./_common/undocumentedRoutes"
 import { formatError } from "./_common/formatError"
 import { playlist_simple } from "./_oai/api-types"
 
@@ -50,6 +50,17 @@ export function PlaylistSelect(i: PlaylistSelectProps) {
     },
     [i]
   )
+  const $otherPlaylist = useRef<any>()
+  const selectOther = useCallback(() => {
+    const value = $otherPlaylist.current.value
+    let split = value.split('/').map(x => x.trim()).filter(Boolean)
+    let id = split[split.length-1]
+    getPlaylist({ playlist_id: id }).then( resp => {
+      i.onSelect(resp)
+    }).catch(err => setError(formatError(err)))
+    console.log(value)
+  }, [$otherPlaylist, i])
+
 
   return (
     <section>
@@ -69,6 +80,14 @@ export function PlaylistSelect(i: PlaylistSelectProps) {
                 >
                   Select
                 </button>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Other (paste here): <input type="text" name="otherPlaylistLink" ref={$otherPlaylist}/>
+              </td>
+              <td>
+                <button type="button" onClick={selectOther}>Select</button>
               </td>
             </tr>
             {playlists &&
