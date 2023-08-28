@@ -153,7 +153,7 @@ export function Confirm({
 }
 
 //ty wes bos
-function chunkify<T>(array: T[], chunkSize = 100) {
+function chunkify<T>(array: T[], chunkSize = 500) {
   const chunks = Array.from({ length: Math.ceil(array.length / chunkSize) }, (_, idx) => {
     const start = chunkSize * idx
     return array.slice(start, start + chunkSize)
