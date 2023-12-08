@@ -1,14 +1,10 @@
 import shuffle from "lodash.shuffle"
-import { useState, useEffect, useCallback } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { MyTracksGetter, PlaylistTracksGetter, StaticPlaylist } from "./Playlist"
 import { formatError } from "./_common/formatError"
-import { playlist_simple, saved_track } from "./_oai/api-types"
-import {
-  postUserPlaylists,
-  postUserPlaylistTracks,
-  putUserPlaylistTracks
-} from "./_oai/modules/Users"
 import { requester } from "./_common/requester"
+import { playlist_simple, saved_track } from "./_oai/api-types"
+import { postUserPlaylistTracks, postUserPlaylists } from "./_oai/modules/Users"
 
 export function Confirm({
   playlist,

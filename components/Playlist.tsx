@@ -13,7 +13,7 @@ export function Playlist({ id, name }: { id: string; name: string }) {
 
 export class MyTracksGetter extends Paginator<saved_track> {
   async _getPage() {
-    const trackResp = await getMeTracks({})
+    const trackResp = await getMeTracks({ limit: 50 })
     return {
       data: trackResp.items || [],
       next: trackResp.next,
