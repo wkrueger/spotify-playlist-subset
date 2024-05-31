@@ -12,3 +12,4 @@ I have created this as fast as possible, so there is no styling. The app is writ
 
     npm install
     npm run dev
+
