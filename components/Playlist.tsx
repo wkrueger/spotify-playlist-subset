@@ -75,7 +75,13 @@ interface PlaylistInnerProps {
   title: string
 }
 
-export class PlaylistInner extends Component<PlaylistInnerProps, PlaylistInner["state"]> {
+interface PlaylistInnerState {
+  tracks: saved_track[] | null
+  loading: boolean
+  error: string
+}
+
+export class PlaylistInner extends Component<PlaylistInnerProps, PlaylistInnerState> {
   state = {
     tracks: null as null | saved_track[],
     loading: false,

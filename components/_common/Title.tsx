@@ -1,8 +1,8 @@
 import Link from "next/link"
-import { useCallback } from "react"
+import { ReactNode, useCallback } from "react"
 import { requester } from "./requester"
 
-export const Title: React.SFC = props => {
+export const Title: React.FC<{ children: ReactNode }> = props => {
   const logout = useCallback(() => {
     requester.clearToken()
     window.location.reload()
@@ -17,12 +17,8 @@ export const Title: React.SFC = props => {
       `}</style>
       <nav>
         <button onClick={logout}>Log out</button>
-        <Link href="/">
-          <a>Playlist subset</a>
-        </Link>
-        <Link href="/podcasts">
-          <a>Podcasts</a>
-        </Link>
+        <Link href="/">Playlist subset</Link>
+        <Link href="/podcasts">Podcasts</Link>
       </nav>
       {props.children}
     </div>

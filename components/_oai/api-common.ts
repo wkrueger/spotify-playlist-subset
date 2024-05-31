@@ -64,7 +64,7 @@ export abstract class SwaggerRequester {
    * Override to return API Response + Common extra fields
    * (Response + GApiCommon.MergeToResponse)
    */
-  abstract async handler(
+  abstract handler(
     request: IRequest,
     input: Record<string, any> & GApiCommon.MergeToRequest,
     operation: IOperation

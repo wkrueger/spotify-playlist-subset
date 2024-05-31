@@ -3,11 +3,11 @@ import Router from "next/router"
 import { getMe } from "../_oai/modules/Me"
 
 // ver: babelrc.js
-export const WEBSITE_URL = process.env.WEBSITE_URL!
-export const CLIENT_ID = process.env.CLIENT_ID
-export const SPOFY_ACCOUNTS_URL = process.env.SPOFY_ACCOUNTS_URL
-export const SPOFY_REDIRECT_URL = process.env.SPOFY_REDIRECT_URL
-export const SPOFY_SERVICE_URL = process.env.SPOFY_SERVICE_URL
+export const WEBSITE_URL = process.env.NEXT_PUBLIC_WEBSITE_URL!
+export const CLIENT_ID = process.env.NEXT_PUBLIC_CLIENT_ID
+export const SPOFY_ACCOUNTS_URL = process.env.NEXT_PUBLIC_SPOFY_ACCOUNTS_URL
+export const SPOFY_REDIRECT_URL = process.env.NEXT_PUBLIC_SPOFY_REDIRECT_URL
+export const SPOFY_SERVICE_URL = process.env.NEXT_PUBLIC_SPOFY_SERVICE_URL
 
 console.log("backend url", WEBSITE_URL)
 

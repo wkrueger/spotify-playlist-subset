@@ -2,3 +2,4 @@ node_modules
 .next
 envfile.js
 package-lock.json
+.env.local
